@@ -1,5 +1,6 @@
 package com.driversed.driversed.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -20,6 +21,7 @@ public class Student {
     private Long id;
     private String name;
     @OneToMany(mappedBy = "student")
+    @JsonIgnore
     private List<Lesson> lessons = new ArrayList<>();
 
 }
