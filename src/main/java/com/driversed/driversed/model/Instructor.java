@@ -1,5 +1,6 @@
 package com.driversed.driversed.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -20,6 +21,7 @@ public class Instructor {
     private Long id;
     private String name;
     @OneToMany(mappedBy = "instructor")
+    @JsonManagedReference
     private List<Lesson> lessons = new ArrayList<>();
 
 
