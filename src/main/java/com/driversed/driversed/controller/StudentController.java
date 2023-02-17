@@ -23,4 +23,10 @@ public class StudentController {
     public Iterable<Student> getAllStudents() {
         return studentService.getAllStudents();
     }
+
+    //UPDATE a Student by reserving a Lesson
+    @PutMapping("/{studentId}/reserve/{lessonId}")
+    public Student reserveLessonForStudent(@PathVariable(value = "studentId") long studentId, @PathVariable(value = "lessonId") long lessonId) {
+        return studentService.reserveLessonForStudent(studentId, lessonId);
+    }
 }

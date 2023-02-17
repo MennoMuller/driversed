@@ -34,7 +34,7 @@ public class InstructorService {
     public Instructor setInstructorAvailable(long id, LocalDate date) {
         Optional<Instructor> foundInstructor = instructorRepository.findById(id);
         if (foundInstructor.isEmpty()) {
-            return null;
+            throw new IllegalArgumentException("Instructor does not exist");
         }
         Instructor instructor = foundInstructor.get();
         for (int i = 9; i < 17; i++) {
@@ -46,6 +46,9 @@ public class InstructorService {
     }
 
     public Instructor addLessonToInstructor(Instructor instructor, LocalDateTime dateTime) {
+        if (lessonService.existsByInstructorAndTime(instructor, dateTime)) {
+            throw new IllegalArgumentException("Day is already set available");
+        }
         Lesson tempLesson = lessonService.newLesson(instructor, dateTime);
         instructor.getLessons().add(tempLesson);
         return instructorRepository.save(instructor);

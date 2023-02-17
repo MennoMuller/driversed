@@ -1,6 +1,6 @@
 package com.driversed.driversed.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -21,10 +21,11 @@ public class Lesson {
     @Column(nullable = false)
     private LocalDateTime time;
     @ManyToOne(optional = false)
-    @JsonBackReference
+    @JsonIgnore
     @JoinColumn(name = "instructor_id", nullable = false)
     private Instructor instructor;
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "student_id")
     private Student student;
 
