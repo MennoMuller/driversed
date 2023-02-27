@@ -9,6 +9,8 @@ function InstructorPage(props) {
   useEffect(() => {
     if (instructor != 0) {
       getSchedule();
+    } else {
+      setLessons([]);
     }
   }, [instructor]);
 

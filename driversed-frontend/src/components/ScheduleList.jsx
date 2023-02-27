@@ -13,6 +13,7 @@ function ScheduleList(props) {
               ? lesson.student
               : lesson.instructor
           }
+          showDate={!props.instructorPerspective}
         />
       ))}
     </div>

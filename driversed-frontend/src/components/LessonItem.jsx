@@ -11,6 +11,7 @@ function LessonItem(props) {
         " m-1 rounded p-2"
       }
     >
+      {props.showDate ? date.toDateString() + " " : ""}
       {date.toLocaleTimeString()}
       <br />
       {props.person

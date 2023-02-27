@@ -1,5 +1,6 @@
 package com.driversed.driversed.controller;
 
+import com.driversed.driversed.dto.LessonGetDto;
 import com.driversed.driversed.dto.PersonGetDto;
 import com.driversed.driversed.dto.PersonPostDto;
 import com.driversed.driversed.model.Student;
@@ -24,6 +25,12 @@ public class StudentController {
     @GetMapping("/all")
     public Iterable<PersonGetDto> getAllStudents() {
         return studentService.getAllStudents();
+    }
+
+    //READ a Student's schedule
+    @GetMapping("/{id}/schedule")
+    public Iterable<LessonGetDto> getStudentSchedule(@PathVariable(value = "id") long id) {
+        return studentService.getStudentSchedule(id);
     }
 
     //UPDATE a Student by reserving a Lesson

@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import { Route, Routes } from "react-router-dom";
 import PeoplePage from "./pages/PeoplePage";
 import InstructorPage from "./pages/InstructorPage";
+import StudentPage from "./pages/StudentPage";
 
 function App() {
   const [students, setStudents] = useState([]);
@@ -75,6 +76,10 @@ function App() {
             element={
               <InstructorPage instructors={instructors} />
             }
+          />
+          <Route
+            path="/student"
+            element={<StudentPage students={students} />}
           />
         </Routes>
       </main>

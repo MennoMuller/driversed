@@ -33,6 +33,10 @@ public class LessonService {
         return lessonRepository.findByInstructor(instructor);
     }
 
+    public Iterable<Lesson> getLessonsByStudent(Student student) {
+        return lessonRepository.findByStudent(student);
+    }
+
     //UPDATE
     public Lesson addStudentToLesson(long lessonId, Student student) {
         Optional<Lesson> foundLesson = lessonRepository.findById(lessonId);

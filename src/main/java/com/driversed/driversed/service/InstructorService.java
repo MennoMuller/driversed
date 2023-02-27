@@ -46,6 +46,19 @@ public class InstructorService {
 
     }
 
+    public Iterable<LessonGetDto> getInstructorSchedule(long id) {
+        Optional<Instructor> foundInstructor = instructorRepository.findById(id);
+        if (!foundInstructor.isPresent()) {
+            throw new IllegalArgumentException("Instructor does not exist");
+        }
+        Instructor instructor = foundInstructor.get();
+        ArrayList<LessonGetDto> schedule = new ArrayList<>();
+        for (Lesson lesson : lessonService.getLessonsByInstructor(instructor)) {
+            schedule.add(lessonMapper.toDto(lesson));
+        }
+        return schedule;
+    }
+
     //UPDATE
     public void setInstructorAvailable(long id, LocalDate date) {
         Optional<Instructor> foundInstructor = instructorRepository.findById(id);
@@ -70,16 +83,5 @@ public class InstructorService {
         return instructorRepository.save(instructor);
     }
 
-    public Iterable<LessonGetDto> getInstructorSchedule(long id) {
-        Optional<Instructor> foundInstructor = instructorRepository.findById(id);
-        if (!foundInstructor.isPresent()) {
-            throw new IllegalArgumentException("Instructor does not exist");
-        }
-        Instructor instructor = foundInstructor.get();
-        ArrayList<LessonGetDto> schedule = new ArrayList<>();
-        for (Lesson lesson : lessonService.getLessonsByInstructor(instructor)) {
-            schedule.add(lessonMapper.toDto(lesson));
-        }
-        return schedule;
-    }
+
 }

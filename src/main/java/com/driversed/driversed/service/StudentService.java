@@ -1,7 +1,9 @@
 package com.driversed.driversed.service;
 
+import com.driversed.driversed.dto.LessonGetDto;
 import com.driversed.driversed.dto.PersonGetDto;
 import com.driversed.driversed.dto.PersonPostDto;
+import com.driversed.driversed.mapper.LessonMapper;
 import com.driversed.driversed.mapper.StudentMapper;
 import com.driversed.driversed.model.Lesson;
 import com.driversed.driversed.model.Student;
@@ -22,6 +24,8 @@ public class StudentService {
     LessonService lessonService;
     @Autowired
     StudentMapper studentMapper;
+    @Autowired
+    LessonMapper lessonMapper;
 
     //CREATE
     public void newStudent(PersonPostDto student) {
@@ -36,6 +40,19 @@ public class StudentService {
             studentList.add(studentMapper.toDto(student));
         }
         return studentList;
+    }
+
+    public Iterable<LessonGetDto> getStudentSchedule(long id) {
+        Optional<Student> foundStudent = studentRepository.findById(id);
+        if (!foundStudent.isPresent()) {
+            throw new IllegalArgumentException("Student does not exist");
+        }
+        Student student = foundStudent.get();
+        ArrayList<LessonGetDto> schedule = new ArrayList<>();
+        for (Lesson lesson : lessonService.getLessonsByStudent(student)) {
+            schedule.add(lessonMapper.toDto(lesson));
+        }
+        return schedule;
     }
 
     //UPDATE
@@ -63,4 +80,6 @@ public class StudentService {
         studentRepository.deleteById(id);
         return "Successfully deleted student";
     }
+
+
 }
