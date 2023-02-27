@@ -1,5 +1,8 @@
 package com.driversed.driversed.service;
 
+import com.driversed.driversed.dto.PersonGetDto;
+import com.driversed.driversed.dto.PersonPostDto;
+import com.driversed.driversed.mapper.StudentMapper;
 import com.driversed.driversed.model.Lesson;
 import com.driversed.driversed.model.Student;
 import com.driversed.driversed.repository.StudentRepository;
@@ -7,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
@@ -16,15 +20,22 @@ public class StudentService {
     StudentRepository studentRepository;
     @Autowired
     LessonService lessonService;
+    @Autowired
+    StudentMapper studentMapper;
 
     //CREATE
-    public Student newStudent(Student student) {
-        return studentRepository.save(student);
+    public void newStudent(PersonPostDto student) {
+        Student newStudent = studentMapper.toEntity(student);
+        studentRepository.save(newStudent);
     }
 
     //READ
-    public Iterable<Student> getAllStudents() {
-        return studentRepository.findAll();
+    public Iterable<PersonGetDto> getAllStudents() {
+        ArrayList<PersonGetDto> studentList = new ArrayList<>();
+        for (Student student : studentRepository.findAll()) {
+            studentList.add(studentMapper.toDto(student));
+        }
+        return studentList;
     }
 
     //UPDATE
