@@ -1,5 +1,7 @@
 package com.driversed.driversed.controller;
 
+import com.driversed.driversed.dto.PersonGetDto;
+import com.driversed.driversed.dto.PersonPostDto;
 import com.driversed.driversed.model.Instructor;
 import com.driversed.driversed.service.InstructorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +18,13 @@ public class InstructorController {
 
     //CREATE new Instructor
     @PostMapping("/new")
-    public Instructor newInstructor(@RequestBody Instructor instructor) {
-        return instructorService.newInstructor(instructor);
+    public void newInstructor(@RequestBody PersonPostDto instructor) {
+        instructorService.newInstructor(instructor);
     }
 
     //READ all Instructors
     @GetMapping("/all")
-    public Iterable<Instructor> getAllInstructors() {
+    public Iterable<PersonGetDto> getAllInstructors() {
         return instructorService.getAllInstructors();
     }
 

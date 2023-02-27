@@ -1,34 +1,86 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import reactLogo from "./assets/react.svg";
+import "./App.css";
+import Header from "./components/Header";
+import { Route, Routes } from "react-router-dom";
+import PeoplePage from "./pages/PeoplePage";
+import InstructorPage from "./pages/InstructorPage";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [students, setStudents] = useState([]);
+  const [instructors, setInstructors] = useState([]);
+
+  const getStudents = () => {
+    fetch("http://localhost:8082/api/student/all")
+      .then((response) => response.json())
+      .then((data) => setStudents(data));
+  };
+
+  const getInstructors = () => {
+    fetch("http://localhost:8082/api/instructor/all")
+      .then((response) => response.json())
+      .then((data) => setInstructors(data));
+  };
+
+  const addStudent = (name) => {
+    const newStudent = JSON.stringify({
+      name: name
+    });
+    fetch("http://localhost:8082/api/student/new", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: newStudent
+    }).then(() => getStudents());
+  };
+
+  const addInstructor = (name) => {
+    const newInstructor = JSON.stringify({
+      name: name
+    });
+    fetch("http://localhost:8082/api/instructor/new", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: newInstructor
+    }).then(() => getInstructors());
+  };
+
+  useEffect(() => {
+    getStudents();
+    getInstructors();
+  }, []);
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    <div>
+      <header>
+        <Header />
+      </header>
+      <main>
+        <Routes>
+          <Route
+            path="/people"
+            element={
+              <PeoplePage
+                students={students}
+                addStudent={addStudent}
+                instructors={instructors}
+                addInstructor={addInstructor}
+              />
+            }
+          />
+          <Route
+            path="/instructor"
+            element={
+              <InstructorPage instructors={instructors} />
+            }
+          />
+        </Routes>
+      </main>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

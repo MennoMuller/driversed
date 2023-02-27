@@ -29,4 +29,10 @@ public class StudentController {
     public Student reserveLessonForStudent(@PathVariable(value = "studentId") long studentId, @PathVariable(value = "lessonId") long lessonId) {
         return studentService.reserveLessonForStudent(studentId, lessonId);
     }
+
+    //DELETE a Student by Id
+    @DeleteMapping("/{id}")
+    public String deleteStudentById(@PathVariable(value = "id") long id) {
+        return studentService.deleteStudentById(id);
+    }
 }

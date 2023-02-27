@@ -30,12 +30,26 @@ public class StudentService {
     //UPDATE
     public Student reserveLessonForStudent(long studentId, long lessonId) {
         Optional<Student> foundStudent = studentRepository.findById(studentId);
-        if (foundStudent.isEmpty()) {
+        if (!foundStudent.isPresent()) {
             throw new IllegalArgumentException("Student does not exist");
         }
         Student student = foundStudent.get();
         Lesson lesson = lessonService.addStudentToLesson(lessonId, student);
         student.getLessons().add(lesson);
         return studentRepository.save(student);
+    }
+
+    //DELETE
+    public String deleteStudentById(long id) {
+        Optional<Student> foundStudent = studentRepository.findById(id);
+        if (!foundStudent.isPresent()) {
+            throw new IllegalArgumentException("Student does not exist");
+        }
+        Student student = foundStudent.get();
+        for (Lesson lesson : student.getLessons()) {
+            lessonService.removeStudentFromLesson(lesson.getId());
+        }
+        studentRepository.deleteById(id);
+        return "Successfully deleted student";
     }
 }

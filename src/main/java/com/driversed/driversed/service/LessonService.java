@@ -23,10 +23,15 @@ public class LessonService {
         return lessonRepository.save(lesson);
     }
 
+    //READ
+    public Iterable<Lesson> getAllLessons() {
+        return lessonRepository.findAll();
+    }
+
     //UPDATE
     public Lesson addStudentToLesson(long lessonId, Student student) {
         Optional<Lesson> foundLesson = lessonRepository.findById(lessonId);
-        if (foundLesson.isEmpty()) {
+        if (!foundLesson.isPresent()) {
             throw new IllegalArgumentException("Lesson does not exist");
         }
         Lesson lesson = foundLesson.get();
@@ -37,8 +42,20 @@ public class LessonService {
         return lessonRepository.save(lesson);
     }
 
+    public Lesson removeStudentFromLesson(long id) {
+        Optional<Lesson> foundLesson = lessonRepository.findById(id);
+        if (!foundLesson.isPresent()) {
+            throw new IllegalArgumentException("Lesson does not exist");
+        }
+        Lesson lesson = foundLesson.get();
+        lesson.setStudent(null);
+        return lessonRepository.save(lesson);
+    }
+
 
     public boolean existsByInstructorAndTime(Instructor instructor, LocalDateTime dateTime) {
         return lessonRepository.existsByInstructorAndTime(instructor, dateTime);
     }
+
+
 }
