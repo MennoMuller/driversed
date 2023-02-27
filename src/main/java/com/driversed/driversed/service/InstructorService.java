@@ -1,8 +1,10 @@
 package com.driversed.driversed.service;
 
+import com.driversed.driversed.dto.LessonGetDto;
 import com.driversed.driversed.dto.PersonGetDto;
 import com.driversed.driversed.dto.PersonPostDto;
 import com.driversed.driversed.mapper.InstructorMapper;
+import com.driversed.driversed.mapper.LessonMapper;
 import com.driversed.driversed.model.Instructor;
 import com.driversed.driversed.model.Lesson;
 import com.driversed.driversed.repository.InstructorRepository;
@@ -25,6 +27,8 @@ public class InstructorService {
     LessonService lessonService;
     @Autowired
     InstructorMapper instructorMapper;
+    @Autowired
+    LessonMapper lessonMapper;
 
     //CREATE
     public void newInstructor(PersonPostDto instructor) {
@@ -43,7 +47,7 @@ public class InstructorService {
     }
 
     //UPDATE
-    public Instructor setInstructorAvailable(long id, LocalDate date) {
+    public void setInstructorAvailable(long id, LocalDate date) {
         Optional<Instructor> foundInstructor = instructorRepository.findById(id);
         if (!foundInstructor.isPresent()) {
             throw new IllegalArgumentException("Instructor does not exist");
@@ -54,7 +58,7 @@ public class InstructorService {
                 instructor = addLessonToInstructor(instructor, LocalDateTime.of(date, LocalTime.of(i, 0)));
             }
         }
-        return instructorRepository.save(instructor);
+        instructorRepository.save(instructor);
     }
 
     public Instructor addLessonToInstructor(Instructor instructor, LocalDateTime dateTime) {
@@ -64,5 +68,18 @@ public class InstructorService {
         Lesson tempLesson = lessonService.newLesson(instructor, dateTime);
         instructor.getLessons().add(tempLesson);
         return instructorRepository.save(instructor);
+    }
+
+    public Iterable<LessonGetDto> getInstructorSchedule(long id) {
+        Optional<Instructor> foundInstructor = instructorRepository.findById(id);
+        if (!foundInstructor.isPresent()) {
+            throw new IllegalArgumentException("Instructor does not exist");
+        }
+        Instructor instructor = foundInstructor.get();
+        ArrayList<LessonGetDto> schedule = new ArrayList<>();
+        for (Lesson lesson : lessonService.getLessonsByInstructor(instructor)) {
+            schedule.add(lessonMapper.toDto(lesson));
+        }
+        return schedule;
     }
 }

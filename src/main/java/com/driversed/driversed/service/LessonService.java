@@ -17,6 +17,7 @@ public class LessonService {
     @Autowired
     LessonRepository lessonRepository;
 
+
     //CREATE
     public Lesson newLesson(Instructor instructor, LocalDateTime dateTime) {
         Lesson lesson = new Lesson(dateTime, instructor);
@@ -26,6 +27,10 @@ public class LessonService {
     //READ
     public Iterable<Lesson> getAllLessons() {
         return lessonRepository.findAll();
+    }
+
+    public Iterable<Lesson> getLessonsByInstructor(Instructor instructor) {
+        return lessonRepository.findByInstructor(instructor);
     }
 
     //UPDATE
