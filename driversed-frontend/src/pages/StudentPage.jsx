@@ -33,17 +33,11 @@ function StudentPage(props) {
       .then((response) => response.json())
       .then((data) =>
         setLessons(
-          data
-            .filter((lesson) => {
-              const lessonDate = Date.parse(lesson.time);
-              const currentDate = currDate.valueOf();
-              return lessonDate >= currentDate;
-            })
-            .sort(function (a, b) {
-              // Turn your strings into dates, and then subtract them
-              // to get a value that is either negative, positive, or zero.
-              return new Date(a.time) - new Date(b.time);
-            })
+          data.sort(function (a, b) {
+            // Turn your strings into dates, and then subtract them
+            // to get a value that is either negative, positive, or zero.
+            return new Date(a.time) - new Date(b.time);
+          })
         )
       );
   }

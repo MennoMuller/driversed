@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -50,7 +51,9 @@ public class StudentService {
         Student student = foundStudent.get();
         ArrayList<LessonGetDto> schedule = new ArrayList<>();
         for (Lesson lesson : lessonService.getLessonsByStudent(student)) {
-            schedule.add(lessonMapper.toDto(lesson));
+            if (lesson.getTime().isAfter(LocalDateTime.now())) {
+                schedule.add(lessonMapper.toDto(lesson));
+            }
         }
         return schedule;
     }
