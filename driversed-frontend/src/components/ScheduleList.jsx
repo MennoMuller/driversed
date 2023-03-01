@@ -6,7 +6,8 @@ function ScheduleList(props) {
     <div className="flex flex-col">
       {props.lessons.map((lesson) => (
         <LessonItem
-          key={lesson.time}
+          key={lesson.id}
+          id={lesson.id}
           time={lesson.time}
           person={
             props.instructorPerspective
@@ -14,6 +15,7 @@ function ScheduleList(props) {
               : lesson.instructor
           }
           showDate={!props.instructorPerspective}
+          onClick={props.onClick}
         />
       ))}
     </div>

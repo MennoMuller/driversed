@@ -79,7 +79,12 @@ function App() {
           />
           <Route
             path="/student"
-            element={<StudentPage students={students} />}
+            element={
+              <StudentPage
+                students={students}
+                instructors={instructors}
+              />
+            }
           />
         </Routes>
       </main>

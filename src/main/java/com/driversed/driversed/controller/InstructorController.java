@@ -34,6 +34,7 @@ public class InstructorController {
         return instructorService.getInstructorSchedule(id);
     }
 
+
     //UPDATE an Instructor by adding a day's worth of lessons
     @PutMapping("/{id}/available")
     public void setInstructorAvailable(@PathVariable(value = "id") long id, @RequestBody String date) {
