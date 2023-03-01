@@ -1,7 +1,9 @@
 import React from "react";
+import { TimeInterval } from "time-interval-js";
 
 function LessonItem(props) {
   const date = new Date(props.time);
+  const lessonLength = TimeInterval.forOneHour();
   return (
     <button
       className={
@@ -13,7 +15,12 @@ function LessonItem(props) {
       onClick={() => props.onClick(props.id)}
     >
       {props.showDate ? date.toDateString() + " " : ""}
-      {date.toLocaleTimeString()}
+      {date.toLocaleTimeString().slice(0, -3) +
+        " - " +
+        lessonLength
+          .addToDate(date)
+          .toLocaleTimeString()
+          .slice(0, -3)}
       <br />
       {props.person
         ? props.person.name
