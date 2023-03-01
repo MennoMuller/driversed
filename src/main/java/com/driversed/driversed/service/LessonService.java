@@ -36,7 +36,7 @@ public class LessonService {
             lessonList.add(lessonMapper.toDto(lesson));
         }
         return lessonList;
-    }
+    }//doen met lambda
 
     public Iterable<Lesson> getLessonsByInstructor(Instructor instructor) {
         return lessonRepository.findByInstructor(instructor);

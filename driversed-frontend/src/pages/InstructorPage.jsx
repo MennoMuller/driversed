@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import InstructorPageInput from "../components/InstructorPageInput";
 import ScheduleList from "../components/ScheduleList";
 
 function InstructorPage(props) {
@@ -33,49 +34,15 @@ function InstructorPage(props) {
     <div>
       <h2 className="text-4xl font-bold">Instructor</h2>
       <div className="flex flex-row justify-evenly">
-        <div className="flex flex-col">
-          <select
-            name="instructor"
-            id="instructor"
-            value={instructor}
-            onChange={(e) => {
-              setInstructor(e.target.value);
-            }}
-          >
-            <option value="0">Select Instructor</option>
-            {props.instructors.map((item) => (
-              <option key={item.id} value={item.id}>
-                {item.name}
-              </option>
-            ))}
-          </select>
-          <input
-            type="date"
-            name="date"
-            id="date"
-            value={date}
-            onChange={(e) => {
-              setDate(e.target.value);
-            }}
-          />
-          {date &&
-          lessons.filter((lesson) => {
-            const lessonDate = new Date(
-              lesson.time
-            ).toDateString();
-            const selectedDate = new Date(
-              date
-            ).toDateString();
-            console.log(date);
-            return lessonDate == selectedDate;
-          }).length === 0 ? (
-            <button onClick={() => setAvailable()}>
-              Set as available
-            </button>
-          ) : (
-            <></>
-          )}
-        </div>
+        <InstructorPageInput
+          instructor={instructor}
+          setInstructor={setInstructor}
+          instructors={props.instructors}
+          date={date}
+          setDate={setDate}
+          lessons={lessons}
+          setAvailable={setAvailable}
+        />
         <ScheduleList
           lessons={lessons.filter((lesson) => {
             const lessonDate = new Date(
