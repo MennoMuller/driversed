@@ -50,20 +50,16 @@ function StudentPage(props) {
 
   function getAvailableSlots() {
     fetch(
-      `http://localhost:8082/api/instructor/${instructor}/schedule`
+      `http://localhost:8082/api/instructor/${instructor}/slots`
     )
       .then((response) => response.json())
       .then((data) =>
         setSlots(
-          data
-            .filter((lesson) => {
-              return lesson.student == null;
-            })
-            .sort(function (a, b) {
-              // Turn your strings into dates, and then subtract them
-              // to get a value that is either negative, positive, or zero.
-              return new Date(a.time) - new Date(b.time);
-            })
+          data.sort(function (a, b) {
+            // Turn your strings into dates, and then subtract them
+            // to get a value that is either negative, positive, or zero.
+            return new Date(a.time) - new Date(b.time);
+          })
         )
       );
   }

@@ -34,6 +34,12 @@ public class InstructorController {
         return instructorService.getInstructorSchedule(id);
     }
 
+    //READ an Instructor's available lesson slots
+    @GetMapping("/{id}/slots")
+    public Iterable<LessonGetDto> getInstructorSlots(@PathVariable(value = "id") long id) {
+        return instructorService.getInstructorSlots(id);
+    }
+
 
     //UPDATE an Instructor by adding a day's worth of lessons
     @PutMapping("/{id}/available")
