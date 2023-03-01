@@ -90,7 +90,7 @@ function StudentPage(props) {
 
   return (
     <div>
-      <h1 className="text-5xl font-bold">Student</h1>
+      <h2 className="text-4xl font-bold">Student</h2>
       <div className="flex flex-row justify-evenly">
         <div className="flex flex-col">
           <select
@@ -134,9 +134,9 @@ function StudentPage(props) {
           />
         </div>
         <div>
-          <h2 className="mb-2 text-xl font-bold">
+          <h3 className="mb-2 text-2xl font-bold">
             Book Lessons
-          </h2>
+          </h3>
           <ScheduleList
             lessons={slots.filter((lesson) => {
               const lessonDate = new Date(
@@ -152,9 +152,9 @@ function StudentPage(props) {
           />
         </div>
         <div>
-          <h2 className="mb-2 text-xl font-bold">
+          <h3 className="mb-2 text-2xl font-bold">
             Your Lessons
-          </h2>
+          </h3>
           <ScheduleList
             lessons={lessons}
             instructorPerspective={false}

@@ -3,7 +3,6 @@ package com.driversed.driversed.controller;
 import com.driversed.driversed.dto.LessonGetDto;
 import com.driversed.driversed.dto.PersonGetDto;
 import com.driversed.driversed.dto.PersonPostDto;
-import com.driversed.driversed.model.Student;
 import com.driversed.driversed.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -35,13 +34,13 @@ public class StudentController {
 
     //UPDATE a Student by reserving a Lesson
     @PutMapping("/{studentId}/reserve/{lessonId}")
-    public Student reserveLessonForStudent(@PathVariable(value = "studentId") long studentId, @PathVariable(value = "lessonId") long lessonId) {
-        return studentService.reserveLessonForStudent(studentId, lessonId);
+    public void reserveLessonForStudent(@PathVariable(value = "studentId") long studentId, @PathVariable(value = "lessonId") long lessonId) {
+        studentService.reserveLessonForStudent(studentId, lessonId);
     }
 
     //DELETE a Student by Id
     @DeleteMapping("/{id}")
-    public String deleteStudentById(@PathVariable(value = "id") long id) {
-        return studentService.deleteStudentById(id);
+    public void deleteStudentById(@PathVariable(value = "id") long id) {
+        studentService.deleteStudentById(id);
     }
 }

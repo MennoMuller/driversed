@@ -1,6 +1,6 @@
 package com.driversed.driversed.controller;
 
-import com.driversed.driversed.model.Lesson;
+import com.driversed.driversed.dto.LessonGetDto;
 import com.driversed.driversed.service.LessonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +14,7 @@ public class LessonController {
 
     //READ
     @GetMapping("/all")
-    public Iterable<Lesson> getAllLessons() {
+    public Iterable<LessonGetDto> getAllLessons() {
         return lessonService.getAllLessons();
     }
 

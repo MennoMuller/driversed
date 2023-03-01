@@ -43,7 +43,6 @@ public class InstructorService {
             instructorList.add(instructorMapper.toDto(instructor));
         }
         return instructorList;
-
     }
 
     public Iterable<LessonGetDto> getInstructorSchedule(long id) {

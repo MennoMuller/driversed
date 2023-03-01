@@ -1,5 +1,7 @@
 package com.driversed.driversed.service;
 
+import com.driversed.driversed.dto.LessonGetDto;
+import com.driversed.driversed.mapper.LessonMapper;
 import com.driversed.driversed.model.Instructor;
 import com.driversed.driversed.model.Lesson;
 import com.driversed.driversed.model.Student;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
@@ -16,6 +19,8 @@ import java.util.Optional;
 public class LessonService {
     @Autowired
     LessonRepository lessonRepository;
+    @Autowired
+    LessonMapper lessonMapper;
 
 
     //CREATE
@@ -25,8 +30,12 @@ public class LessonService {
     }
 
     //READ
-    public Iterable<Lesson> getAllLessons() {
-        return lessonRepository.findAll();
+    public Iterable<LessonGetDto> getAllLessons() {
+        ArrayList<LessonGetDto> lessonList = new ArrayList<>();
+        for (Lesson lesson : lessonRepository.findAll()) {
+            lessonList.add(lessonMapper.toDto(lesson));
+        }
+        return lessonList;
     }
 
     public Iterable<Lesson> getLessonsByInstructor(Instructor instructor) {

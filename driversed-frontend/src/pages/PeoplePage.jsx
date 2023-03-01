@@ -5,10 +5,10 @@ import PeopleTable from "../components/PeopleTable";
 function PeoplePage(props) {
   return (
     <div className="flex flex-col">
-      <h1 className="text-5xl font-bold">People</h1>
+      <h2 className="text-4xl font-bold">People</h2>
       <div className="flex flex-row justify-around">
         <div className="flex flex-col">
-          <h2 className="text-3xl font-bold">Students</h2>
+          <h3 className="text-3xl font-bold">Students</h3>
           <PeopleTable people={props.students} />
           <CreatePersonForm
             submitButton="Add Student"
@@ -16,9 +16,9 @@ function PeoplePage(props) {
           />
         </div>
         <div className="flex flex-col">
-          <h2 className="text-3xl font-bold">
+          <h3 className="text-3xl font-bold">
             Instructors
-          </h2>
+          </h3>
           <PeopleTable people={props.instructors} />
           <CreatePersonForm
             submitButton="Add Instructor"

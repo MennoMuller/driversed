@@ -3,8 +3,10 @@ import { NavLink } from "react-router-dom";
 
 function Header(props) {
   return (
-    <div className="w-screen bg-red-500">
-      Blabla
+    <div className="w-screen bg-slate-600 p-3">
+      <h1 className="mb-2 text-5xl font-bold">
+        Driver's Ed
+      </h1>
       <nav>
         <NavLink
           to="/people"
