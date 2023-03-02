@@ -35,7 +35,12 @@ function StudentPage(props) {
 
   function getFutureLessons() {
     fetch(
-      `http://localhost:8082/api/student/${student}/schedule`
+      `http://localhost:8082/api/student/studentauth/${student}/schedule`,
+      {
+        headers: {
+          Authorization: "Basic " + btoa("student:password")
+        }
+      }
     )
       .then((response) => response.json())
       .then((data) => setLessons(data.sort(sortByTime)));
@@ -51,8 +56,13 @@ function StudentPage(props) {
 
   const bookLesson = (lessonId) => {
     fetch(
-      `http://localhost:8082/api/student/${student}/reserve/${lessonId}`,
-      { method: "PUT" }
+      `http://localhost:8082/api/student/studentauth/${student}/reserve/${lessonId}`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: "Basic " + btoa("student:password")
+        }
+      }
     ).then(() => {
       getAvailableSlots();
       getFutureLessons();
@@ -61,8 +71,13 @@ function StudentPage(props) {
 
   const cancelLesson = (lessonId) => {
     fetch(
-      `http://localhost:8082/api/lesson/${lessonId}/cancel/student`,
-      { method: "PUT" }
+      `http://localhost:8082/api/lesson/studentauth/${lessonId}/cancel/student`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: "Basic " + btoa("student:password")
+        }
+      }
     ).then(() => {
       getAvailableSlots();
       getFutureLessons();

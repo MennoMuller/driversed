@@ -15,7 +15,7 @@ public class StudentController {
     StudentService studentService;
 
     //CREATE new Student
-    @PostMapping("/new")
+    @PostMapping("/admin/new")
     public void newStudent(@RequestBody PersonPostDto student) {
         studentService.newStudent(student);
     }
@@ -27,20 +27,20 @@ public class StudentController {
     }
 
     //READ a Student's schedule
-    @GetMapping("/{id}/schedule")
+    @GetMapping("/studentauth/{id}/schedule")
     public Iterable<LessonGetDto> getStudentSchedule(@PathVariable(value = "id") long id) {
         return studentService.getStudentSchedule(id);
     }
 
     //UPDATE a Student by reserving a Lesson
-    @PutMapping("/{studentId}/reserve/{lessonId}")
+    @PutMapping("/studentauth/{studentId}/reserve/{lessonId}")
     public void reserveLessonForStudent(@PathVariable(value = "studentId") long studentId, @PathVariable(value = "lessonId") long lessonId) {
         studentService.reserveLessonForStudent(studentId, lessonId);
     }
 
-    //DELETE a Student by Id
-    @DeleteMapping("/{id}")
-    public void deleteStudentById(@PathVariable(value = "id") long id) {
-        studentService.deleteStudentById(id);
-    }
+//    //DELETE a Student by Id
+//    @DeleteMapping("/{id}")
+//    public void deleteStudentById(@PathVariable(value = "id") long id) {
+//        studentService.deleteStudentById(id);
+//    }
 }

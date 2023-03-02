@@ -26,9 +26,10 @@ function App() {
     const newStudent = JSON.stringify({
       name: name
     });
-    fetch("http://localhost:8082/api/student/new", {
+    fetch("http://localhost:8082/api/student/admin/new", {
       method: "POST",
       headers: {
+        Authorization: "Basic " + btoa("admin:admin"),
         "Content-Type": "application/json"
       },
       body: newStudent
@@ -39,13 +40,17 @@ function App() {
     const newInstructor = JSON.stringify({
       name: name
     });
-    fetch("http://localhost:8082/api/instructor/new", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: newInstructor
-    }).then(() => getInstructors());
+    fetch(
+      "http://localhost:8082/api/instructor/admin/new",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Basic " + btoa("admin:admin")
+        },
+        body: newInstructor
+      }
+    ).then(() => getInstructors());
   };
 
   useEffect(() => {

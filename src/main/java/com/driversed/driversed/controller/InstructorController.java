@@ -17,7 +17,7 @@ public class InstructorController {
     InstructorService instructorService;
 
     //CREATE new Instructor
-    @PostMapping("/new")
+    @PostMapping("/admin/new")
     public void newInstructor(@RequestBody PersonPostDto instructor) {
         instructorService.newInstructor(instructor);
     }
@@ -29,7 +29,7 @@ public class InstructorController {
     }
 
     //READ an Instructor's schedule
-    @GetMapping("/{id}/schedule")
+    @GetMapping("/instructorauth/{id}/schedule")
     public Iterable<LessonGetDto> getInstructorSchedule(@PathVariable(value = "id") long id) {
         return instructorService.getInstructorSchedule(id);
     }
@@ -42,7 +42,7 @@ public class InstructorController {
 
 
     //UPDATE an Instructor by adding a day's worth of lessons
-    @PutMapping("/{id}/available")
+    @PutMapping("/instructorauth/{id}/available")
     public void setInstructorAvailable(@PathVariable(value = "id") long id, @RequestBody String date) {
         instructorService.setInstructorAvailable(id, LocalDate.parse(date));
     }

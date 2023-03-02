@@ -19,7 +19,7 @@ public class LessonController {
     }
 
     //UPDATE
-    @PutMapping("/{id}/cancel/student")
+    @PutMapping("/studentauth/{id}/cancel/student")
     public void cancelLessonForStudent(@PathVariable(value = "id") long id) {
         lessonService.removeStudentFromLesson(id);
     }
