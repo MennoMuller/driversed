@@ -15,8 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 @Transactional
@@ -38,11 +39,10 @@ public class InstructorService {
 
     //READ
     public Iterable<PersonGetDto> getAllInstructors() {
-        ArrayList<PersonGetDto> instructorList = new ArrayList<>();
-        for (Instructor instructor : instructorRepository.findAll()) {
-            instructorList.add(instructorMapper.toDto(instructor));
-        }
-        return instructorList;
+        return StreamSupport
+                .stream(instructorRepository.findAll().spliterator(), false)
+                .map(instructor -> instructorMapper.toDto(instructor))
+                .collect(Collectors.toList());
     }
 
     public Iterable<LessonGetDto> getInstructorSchedule(long id) {
@@ -51,11 +51,10 @@ public class InstructorService {
             throw new IllegalArgumentException("Instructor does not exist");
         }
         Instructor instructor = foundInstructor.get();
-        ArrayList<LessonGetDto> schedule = new ArrayList<>();
-        for (Lesson lesson : lessonService.getLessonsByInstructor(instructor)) {
-            schedule.add(lessonMapper.toDto(lesson));
-        }
-        return schedule;
+        return StreamSupport
+                .stream(lessonService.getLessonsByInstructor(instructor).spliterator(), false)
+                .map(lesson -> lessonMapper.toDto(lesson))
+                .collect(Collectors.toList());
     }
 
     public Iterable<LessonGetDto> getInstructorSlots(long id) {
@@ -64,13 +63,11 @@ public class InstructorService {
             throw new IllegalArgumentException("Instructor does not exist");
         }
         Instructor instructor = foundInstructor.get();
-        ArrayList<LessonGetDto> schedule = new ArrayList<>();
-        for (Lesson lesson : lessonService.getLessonsByInstructor(instructor)) {
-            if (lesson.getStudent() == null && lesson.getTime().isAfter(LocalDateTime.now())) {
-                schedule.add(lessonMapper.toDto(lesson));
-            }
-        }
-        return schedule;
+        return StreamSupport
+                .stream(lessonService.getLessonsByInstructor(instructor).spliterator(), false)
+                .filter(lesson -> lesson.getStudent() == null && lesson.getTime().isAfter(LocalDateTime.now()))
+                .map(lesson -> lessonMapper.toDto(lesson))
+                .collect(Collectors.toList());
     }
 
     //UPDATE

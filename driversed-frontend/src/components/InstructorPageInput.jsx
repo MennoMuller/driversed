@@ -1,23 +1,15 @@
 import React from "react";
+import SelectorBox from "./SelectorBox";
 
 function InstructorPageInput(props) {
   return (
     <div className="flex flex-col">
-      <select
+      <SelectorBox
         name="instructor"
-        id="instructor"
         value={props.instructor}
-        onChange={(e) => {
-          props.setInstructor(e.target.value);
-        }}
-      >
-        <option value="0">Select Instructor</option>
-        {props.instructors.map((item) => (
-          <option key={item.id} value={item.id}>
-            {item.name}
-          </option>
-        ))}
-      </select>
+        setValue={props.setInstructor}
+        list={props.instructors}
+      />
       <input
         type="date"
         name="date"

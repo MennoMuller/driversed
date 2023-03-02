@@ -13,8 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 @Transactional
@@ -36,11 +37,10 @@ public class StudentService {
 
     //READ
     public Iterable<PersonGetDto> getAllStudents() {
-        ArrayList<PersonGetDto> studentList = new ArrayList<>();
-        for (Student student : studentRepository.findAll()) {
-            studentList.add(studentMapper.toDto(student));
-        }
-        return studentList;
+        return StreamSupport
+                .stream(studentRepository.findAll().spliterator(), false)
+                .map(student -> studentMapper.toDto(student))
+                .collect(Collectors.toList());
     }
 
     public Iterable<LessonGetDto> getStudentSchedule(long id) {
@@ -49,13 +49,11 @@ public class StudentService {
             throw new IllegalArgumentException("Student does not exist");
         }
         Student student = foundStudent.get();
-        ArrayList<LessonGetDto> schedule = new ArrayList<>();
-        for (Lesson lesson : lessonService.getLessonsByStudent(student)) {
-            if (lesson.getTime().isAfter(LocalDateTime.now())) {
-                schedule.add(lessonMapper.toDto(lesson));
-            }
-        }
-        return schedule;
+        return StreamSupport
+                .stream(lessonService.getLessonsByStudent(student).spliterator(), false)
+                .filter(lesson -> lesson.getTime().isAfter(LocalDateTime.now()))
+                .map(lesson -> lessonMapper.toDto(lesson))
+                .collect(Collectors.toList());
     }
 
     //UPDATE

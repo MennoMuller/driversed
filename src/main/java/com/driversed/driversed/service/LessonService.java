@@ -11,8 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 @Transactional
@@ -31,12 +32,11 @@ public class LessonService {
 
     //READ
     public Iterable<LessonGetDto> getAllLessons() {
-        ArrayList<LessonGetDto> lessonList = new ArrayList<>();
-        for (Lesson lesson : lessonRepository.findAll()) {
-            lessonList.add(lessonMapper.toDto(lesson));
-        }
-        return lessonList;
-    }//doen met lambda
+        return StreamSupport
+                .stream(lessonRepository.findAll().spliterator(), false)
+                .map(lesson -> lessonMapper.toDto(lesson))
+                .collect(Collectors.toList());
+    }
 
     public Iterable<Lesson> getLessonsByInstructor(Instructor instructor) {
         return lessonRepository.findByInstructor(instructor);
