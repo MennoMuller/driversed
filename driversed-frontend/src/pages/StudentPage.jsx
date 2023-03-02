@@ -48,7 +48,12 @@ function StudentPage(props) {
 
   function getAvailableSlots() {
     fetch(
-      `http://localhost:8082/api/instructor/${instructor}/slots`
+      `http://localhost:8082/api/instructor/studentauth/${instructor}/slots`,
+      {
+        headers: {
+          Authorization: "Basic " + btoa("student:password")
+        }
+      }
     )
       .then((response) => response.json())
       .then((data) => setSlots(data.sort(sortByTime)));

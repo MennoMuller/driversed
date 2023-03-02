@@ -11,13 +11,27 @@ function App() {
   const [instructors, setInstructors] = useState([]);
 
   const getStudents = () => {
-    fetch("http://localhost:8082/api/student/all")
+    fetch(
+      "http://localhost:8082/api/student/studentauth/all",
+      {
+        headers: {
+          Authorization: "Basic " + btoa("student:password")
+        }
+      }
+    )
       .then((response) => response.json())
       .then((data) => setStudents(data));
   };
 
   const getInstructors = () => {
-    fetch("http://localhost:8082/api/instructor/all")
+    fetch(
+      "http://localhost:8082/api/instructor/studentauth/all",
+      {
+        headers: {
+          Authorization: "Basic " + btoa("student:password")
+        }
+      }
+    )
       .then((response) => response.json())
       .then((data) => setInstructors(data));
   };

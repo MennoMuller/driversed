@@ -23,7 +23,7 @@ public class InstructorController {
     }
 
     //READ all Instructors
-    @GetMapping("/all")
+    @GetMapping("/studentauth/all")
     public Iterable<PersonGetDto> getAllInstructors() {
         return instructorService.getAllInstructors();
     }
@@ -35,7 +35,7 @@ public class InstructorController {
     }
 
     //READ an Instructor's available lesson slots
-    @GetMapping("/{id}/slots")
+    @GetMapping("/studentauth/{id}/slots")
     public Iterable<LessonGetDto> getInstructorSlots(@PathVariable(value = "id") long id) {
         return instructorService.getInstructorSlots(id);
     }

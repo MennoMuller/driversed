@@ -20,7 +20,7 @@ public class SecurityConfig {
                 .cors()
                 .and()
                 .csrf()
-                .and()
+                .disable()
 
                 .authorizeHttpRequests()
                 .requestMatchers("/admin/**")

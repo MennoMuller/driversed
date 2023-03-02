@@ -21,7 +21,7 @@ public class StudentController {
     }
 
     //READ all Students
-    @GetMapping("/all")
+    @GetMapping("/studentauth/all")
     public Iterable<PersonGetDto> getAllStudents() {
         return studentService.getAllStudents();
     }

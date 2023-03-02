@@ -17,7 +17,13 @@ function InstructorPage(props) {
 
   function getSchedule() {
     fetch(
-      `http://localhost:8082/api/instructor/instructorauth/${instructor}/schedule`
+      `http://localhost:8082/api/instructor/instructorauth/${instructor}/schedule`,
+      {
+        headers: {
+          Authorization:
+            "Basic " + btoa("instructor:password")
+        }
+      }
     )
       .then((response) => response.json())
       .then((data) => setLessons(data));
@@ -26,7 +32,14 @@ function InstructorPage(props) {
   function setAvailable() {
     fetch(
       `http://localhost:8082/api/instructor/instructorauth/${instructor}/available`,
-      { method: "PUT", body: date }
+      {
+        method: "PUT",
+        body: date,
+        headers: {
+          Authorization:
+            "Basic " + btoa("instructor:password")
+        }
+      }
     ).then(() => getSchedule());
   }
 
