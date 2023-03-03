@@ -9,6 +9,12 @@ function Header(props) {
       </h1>
       <nav>
         <NavLink
+          to="/account"
+          className="rounded p-2 text-lg text-black hover:opacity-80 dark:text-white"
+        >
+          Account
+        </NavLink>
+        <NavLink
           to="/people"
           className="rounded p-2 text-lg text-black hover:opacity-80 dark:text-white"
         >

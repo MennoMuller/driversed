@@ -5,17 +5,21 @@ import { Route, Routes } from "react-router-dom";
 import PeoplePage from "./pages/PeoplePage";
 import InstructorPage from "./pages/InstructorPage";
 import StudentPage from "./pages/StudentPage";
+import AccountPage from "./pages/AccountPage";
 
 function App() {
   const [students, setStudents] = useState([]);
   const [instructors, setInstructors] = useState([]);
+  const [user, setUser] = useState({});
 
   const getStudents = () => {
     fetch(
       "http://localhost:8082/api/student/studentauth/all",
       {
         headers: {
-          Authorization: "Basic " + btoa("student:password")
+          Authorization:
+            "Basic " +
+            btoa(user.username + ":" + user.password)
         }
       }
     )
@@ -28,7 +32,9 @@ function App() {
       "http://localhost:8082/api/instructor/studentauth/all",
       {
         headers: {
-          Authorization: "Basic " + btoa("student:password")
+          Authorization:
+            "Basic " +
+            btoa(user.username + ":" + user.password)
         }
       }
     )
@@ -43,7 +49,9 @@ function App() {
     fetch("http://localhost:8082/api/student/admin/new", {
       method: "POST",
       headers: {
-        Authorization: "Basic " + btoa("admin:admin"),
+        Authorization:
+          "Basic " +
+          btoa(user.username + ":" + user.password),
         "Content-Type": "application/json"
       },
       body: newStudent
@@ -60,7 +68,9 @@ function App() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Basic " + btoa("admin:admin")
+          Authorization:
+            "Basic " +
+            btoa(user.username + ":" + user.password)
         },
         body: newInstructor
       }
@@ -68,14 +78,18 @@ function App() {
   };
 
   useEffect(() => {
-    getStudents();
-    getInstructors();
-  }, []);
+    if (user.username) {
+      setStudents([]);
+      setInstructors([]);
+      getStudents();
+      getInstructors();
+    }
+  }, [user]);
 
   return (
     <div>
       <header>
-        <Header />
+        <Header user={user} />
       </header>
       <main>
         <Routes>
@@ -87,22 +101,33 @@ function App() {
                 addStudent={addStudent}
                 instructors={instructors}
                 addInstructor={addInstructor}
+                user={user}
               />
             }
           />
           <Route
             path="/instructor"
             element={
-              <InstructorPage instructors={instructors} />
+              <InstructorPage
+                instructors={instructors}
+                user={user}
+              />
             }
           />
           <Route
             path="/student"
             element={
               <StudentPage
+                user={user}
                 students={students}
                 instructors={instructors}
               />
+            }
+          />
+          <Route
+            path="/account"
+            element={
+              <AccountPage user={user} setUser={setUser} />
             }
           />
         </Routes>

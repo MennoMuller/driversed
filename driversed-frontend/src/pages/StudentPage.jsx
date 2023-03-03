@@ -38,7 +38,13 @@ function StudentPage(props) {
       `http://localhost:8082/api/student/studentauth/${student}/schedule`,
       {
         headers: {
-          Authorization: "Basic " + btoa("student:password")
+          Authorization:
+            "Basic " +
+            btoa(
+              props.user.username +
+                ":" +
+                props.user.password
+            )
         }
       }
     )
@@ -51,7 +57,13 @@ function StudentPage(props) {
       `http://localhost:8082/api/instructor/studentauth/${instructor}/slots`,
       {
         headers: {
-          Authorization: "Basic " + btoa("student:password")
+          Authorization:
+            "Basic " +
+            btoa(
+              props.user.username +
+                ":" +
+                props.user.password
+            )
         }
       }
     )
@@ -65,7 +77,13 @@ function StudentPage(props) {
       {
         method: "PUT",
         headers: {
-          Authorization: "Basic " + btoa("student:password")
+          Authorization:
+            "Basic " +
+            btoa(
+              props.user.username +
+                ":" +
+                props.user.password
+            )
         }
       }
     ).then(() => {
@@ -80,7 +98,13 @@ function StudentPage(props) {
       {
         method: "PUT",
         headers: {
-          Authorization: "Basic " + btoa("student:password")
+          Authorization:
+            "Basic " +
+            btoa(
+              props.user.username +
+                ":" +
+                props.user.password
+            )
         }
       }
     ).then(() => {

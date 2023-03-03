@@ -21,7 +21,12 @@ function InstructorPage(props) {
       {
         headers: {
           Authorization:
-            "Basic " + btoa("instructor:password")
+            "Basic " +
+            btoa(
+              props.user.username +
+                ":" +
+                props.user.password
+            )
         }
       }
     )
@@ -37,7 +42,12 @@ function InstructorPage(props) {
         body: date,
         headers: {
           Authorization:
-            "Basic " + btoa("instructor:password")
+            "Basic " +
+            btoa(
+              props.user.username +
+                ":" +
+                props.user.password
+            )
         }
       }
     ).then(() => getSchedule());
