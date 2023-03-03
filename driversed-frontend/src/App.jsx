@@ -125,7 +125,7 @@ function App() {
             }
           />
           <Route
-            path="/account"
+            path="/"
             element={
               <AccountPage user={user} setUser={setUser} />
             }
